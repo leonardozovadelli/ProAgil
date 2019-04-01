@@ -12,6 +12,7 @@ namespace ProAgil.Repository
         public ProAgilRepository(ProAgilContext context)
         {
             _context = context;
+            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public void Add<T>(T entity) where T : class
         {
@@ -43,11 +44,12 @@ namespace ProAgil.Repository
                 .ThenInclude(p => p.Palestrate);
             }
 
-            query = query.OrderByDescending(c => c.DataEvento);
+            query = query.AsNoTracking()
+                        .OrderByDescending(c => c.DataEvento);
 
             return await query.ToArrayAsync();
         }
-        public async Task<Evento[]> GetAllEventoAsyncByTema(string Tema, bool includePalestrantes)
+        public async Task<Evento[]> GetAllEventoAsyncByTema(string tema, bool includePalestrantes)
         {
             IQueryable<Evento> query = _context.Eventos
             .Include(c => c.Lotes)
@@ -60,9 +62,9 @@ namespace ProAgil.Repository
                 .ThenInclude(p => p.Palestrate);
             }
 
-            query = query
+            query = query.AsNoTracking()
             .OrderByDescending(c => c.DataEvento)
-            .Where(c => c.Tema.ToLower().Contains(Tema.ToLower()));
+            .Where(c => c.Tema.ToLower().Contains(tema.ToLower()));
             
 
             return await query.ToArrayAsync();
@@ -80,7 +82,7 @@ namespace ProAgil.Repository
                 .ThenInclude(p => p.Palestrate);
             }
 
-            query = query
+            query = query.AsNoTracking()
             .OrderByDescending(c => c.DataEvento)
             .Where(c => c.Id == EventoId);
 
@@ -116,7 +118,8 @@ namespace ProAgil.Repository
                 .ThenInclude(e => e.Evento);
             }
 
-            query = query.Where(p => p.Nome.ToLower().Contains(Name.ToLower()));
+            query = query.AsNoTracking()
+            .Where(p => p.Nome.ToLower().Contains(Name.ToLower()));
 
             return await query.ToArrayAsync();
         }

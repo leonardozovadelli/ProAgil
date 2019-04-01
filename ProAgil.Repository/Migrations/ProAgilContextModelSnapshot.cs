@@ -47,9 +47,9 @@ namespace ProAgil.Repository.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataFim");
+                    b.Property<DateTime?>("DataFim");
 
-                    b.Property<DateTime>("DataInicio");
+                    b.Property<DateTime?>("DataInicio");
 
                     b.Property<int>("EventoId");
 
@@ -120,12 +120,12 @@ namespace ProAgil.Repository.Migrations
 
                     b.HasIndex("PalestranteId");
 
-                    b.ToTable("RedeSocials");
+                    b.ToTable("RedeSociais");
                 });
 
             modelBuilder.Entity("ProAgil.Domain.Lote", b =>
                 {
-                    b.HasOne("ProAgil.Domain.Evento", "Evento")
+                    b.HasOne("ProAgil.Domain.Evento")
                         .WithMany("Lotes")
                         .HasForeignKey("EventoId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -146,11 +146,11 @@ namespace ProAgil.Repository.Migrations
 
             modelBuilder.Entity("ProAgil.Domain.RedeSocial", b =>
                 {
-                    b.HasOne("ProAgil.Domain.Evento", "Evento")
+                    b.HasOne("ProAgil.Domain.Evento")
                         .WithMany("RedeSociais")
                         .HasForeignKey("EventoId");
 
-                    b.HasOne("ProAgil.Domain.Palestrante", "Palestrante")
+                    b.HasOne("ProAgil.Domain.Palestrante")
                         .WithMany("RedeSociais")
                         .HasForeignKey("PalestranteId");
                 });

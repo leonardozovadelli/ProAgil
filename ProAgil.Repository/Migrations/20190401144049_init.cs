@@ -52,8 +52,8 @@ namespace ProAgil.Repository.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(nullable: true),
                     Preco = table.Column<decimal>(nullable: false),
-                    DataInicio = table.Column<DateTime>(nullable: false),
-                    DataFim = table.Column<DateTime>(nullable: false),
+                    DataInicio = table.Column<DateTime>(nullable: true),
+                    DataFim = table.Column<DateTime>(nullable: true),
                     quantidade = table.Column<int>(nullable: false),
                     EventoId = table.Column<int>(nullable: false)
                 },
@@ -93,7 +93,7 @@ namespace ProAgil.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RedeSocials",
+                name: "RedeSociais",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -106,15 +106,15 @@ namespace ProAgil.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RedeSocials", x => x.Id);
+                    table.PrimaryKey("PK_RedeSociais", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RedeSocials_Eventos_EventoId",
+                        name: "FK_RedeSociais_Eventos_EventoId",
                         column: x => x.EventoId,
                         principalTable: "Eventos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RedeSocials_Palestrantes_PalestranteId",
+                        name: "FK_RedeSociais_Palestrantes_PalestranteId",
                         column: x => x.PalestranteId,
                         principalTable: "Palestrantes",
                         principalColumn: "Id",
@@ -132,13 +132,13 @@ namespace ProAgil.Repository.Migrations
                 column: "PalestranteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RedeSocials_EventoId",
-                table: "RedeSocials",
+                name: "IX_RedeSociais_EventoId",
+                table: "RedeSociais",
                 column: "EventoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RedeSocials_PalestranteId",
-                table: "RedeSocials",
+                name: "IX_RedeSociais_PalestranteId",
+                table: "RedeSociais",
                 column: "PalestranteId");
         }
 
@@ -151,7 +151,7 @@ namespace ProAgil.Repository.Migrations
                 name: "PalestranteEventos");
 
             migrationBuilder.DropTable(
-                name: "RedeSocials");
+                name: "RedeSociais");
 
             migrationBuilder.DropTable(
                 name: "Eventos");
